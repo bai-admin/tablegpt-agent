@@ -135,4 +135,4 @@ local = [
 ]
 
 [tool.uv]
-default-groups = "all"
+default-groups = ["all"]
