@@ -4,14 +4,19 @@
 	"name": "tablegpt-agent",
 	"image": "mcr.microsoft.com/devcontainers/python:1-3.12",
 
-	"containerEnv" : {
-		// This will instruct hatch to create envs in the workspace folder.
-		// It makes selecting interpreter simpler.
-		"HATCH_DATA_DIR": "${containerWorkspaceFolder}"
+	"containerEnv": {
+		"UV_COMPILE_BYTECODE": "1",
+		"UV_CACHE_DIR": "/home/${containerUser}/.cache/uv"
 	},
-	
+	"features": {
+        "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+		"ghcr.io/jsburckhardt/devcontainer-features/ruff:1": {},
+		"ghcr.io/jsburckhardt/devcontainer-features/codex:1": {}
+    },
+
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install hatch",
+	// Install uv and sync all default dependency groups.
+	"postCreateCommand": "uv sync",
 
 	// See https://stackoverflow.com/questions/70206554/share-ssh-keys-with-vs-code-devcontainer-running-with-dockers-wsl2-backend
 	"mounts": [
